@@ -32,20 +32,24 @@ def finalize():
 
 
 def converToProRes(fileName, fullPath):
-    finalName = staging_Path+fileName+"_ProResLT.mov"
+    finalName = staging_Path+fileName+"_ProResLT_3.mov"
+    ff_command = "ffmpeg -i " + fullPath + " -vcodec prores_ks -profile:v 3 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le "+ finalName
 
-    command = [
-        'ffmpeg',
-        '-i',
-        fullPath,
-        '-c:v prores_ks -profile:v 1',
-        staging_Path+fileName+"_ProResLT.mov",
-    ]
-    print(command)
+    print("### " + ff_command)
+    subprocess.call(ff_command, shell=True)
 
-    ffmpeg_run = subprocess.Popen( 'ffmpeg', '-i', fullPath, '-c:v prores_ks -profile:v 1', finalName, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, _ = ffmpeg_run.communicate()
-    print(_)
+    # command = [
+    #     'ffmpeg',
+    #     '-i',
+    #     fullPath,
+    #     '-c:v prores_ks -profile:v 1',
+    #     staging_Path+fileName+"_ProResLT.mov",
+    # ]
+    # print(command)
+    #
+    # ffmpeg_run = subprocess.Popen( 'ffmpeg', '-i', fullPath, '-c:v prores_ks -profile:v 1', finalName, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    # output, _ = ffmpeg_run.communicate()
+    # print(_)
 
     # subprocess.call(['ffmpeg', '-i', fullPath, staging_Path+fileName+'_ProResLT.mov'])
     # os.system("ffmpeg -i "+fullPath" -c:v prores_ks -profile:v 1 "+staging_Path+fileName+"_ProResLT.mov")
