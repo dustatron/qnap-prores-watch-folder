@@ -1,8 +1,38 @@
 import os
 import re
 
-test_string = 'a Valid |||||String|123--__.txt'
-#
+test_string = 'MVI_?0662|.MP4'
+
+watch_path = '/share/CACHEDEV1_DATA/R2 Working/python/qnap-prores-watch-folder-master/working/processed'
+file_path_array = []
+file_name_array = []
+
+def buildList(l):
+    file_path_array.append(os.path.join(r,l))
+    file_name_array.append(os.path.join(l))
+
+def cleanString(file_name):
+    file_name_no_extention = os.path.splitext(file_name)
+    space_to_dash = file_name_no_extention[0].replace(' ', '_').lower()
+    clean_name = re.sub(r'[\W-]+', '', space_to_dash)
+    return  clean_name
+
+for r, d, f in os.walk(watch_path):
+    for file in f:
+        if '.MP4' in file:
+            buildList(file)
+        elif '.mp4' in file:
+            buildList(file)
+
+for i in file_name_array:
+    new_name = cleanString(i)
+    print(new_name)
+
+
+
+
+
+
 # line = re.sub('[!@#$|?]', '', test_string)
 #
 #
@@ -16,16 +46,3 @@ test_string = 'a Valid |||||String|123--__.txt'
 
 # print(bool(re.match("^[A-Za-z0-9_-]*$", test_string)))
 # print(bool(re.match("^[A-Za-z0-9_-]*$", 'inv@lid')))
-
-
-def cleanString(file_name):
-
-    file_name_no_extention = os.path.splitext(file_name)
-    remove_bad_characters = re.sub('[!@#$|?]', '', file_name_no_extention[0])
-    spaces_to_dashs = remove_bad_characters.replace(' ', '-').lower()
-
-    # needs_cleaning = just_the_name[0]
-    # cleaned = "".join(i for i in needs_cleaning if i not in "\/:*?<>|")
-    return spaces_to_dashs
-
-print(cleanString(test_string))
