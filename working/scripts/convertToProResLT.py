@@ -1,8 +1,15 @@
 import os
 import subprocess
 import shutil
+<<<<<<< HEAD
 
 master_path = "/share/CACHEDEV1_DATA/R2 Working/python/qnap-prores-watch-folder-master"
+=======
+import re
+
+
+master_path = "/Users/dmccord/Desktop/qnap-prores-watch-folder-master"
+>>>>>>> f4e4cda79e6c3361dde64f98a4f3bbdb173e770c
 
 watch_path = master_path+'/download_here/'
 in_process_path = master_path+'/working/inProcess/'
@@ -14,10 +21,19 @@ file_path_array = []
 file_name_array = []
 
 def cleanString(file_name):
+<<<<<<< HEAD
     just_the_name = os.path.splitext(file_name)
     needs_cleaning = just_the_name[0]
     cleaned = "".join(i for i in needs_cleaning if i not in "\/:*?<>|")
     return cleaned
+=======
+
+    file_name_no_extention = os.path.splitext(file_name)
+    remove_bad_characters = re.sub('[!@#$|?%^&*]', '', file_name_no_extention[0])
+    spaces_to_dashs = remove_bad_characters.replace(' ', '-').lower()
+
+    return spaces_to_dashs
+>>>>>>> f4e4cda79e6c3361dde64f98a4f3bbdb173e770c
 
 def buildList(l):
     file_path_array.append(os.path.join(r,l))
@@ -35,9 +51,15 @@ def moveToProcessed(file):
 
 def converToProRes(file_name, full_path):
     print("File Name " +file_name)
+<<<<<<< HEAD
     cleanName = cleanString(file_name)
     print("clean name " + cleanName)
     finalName = staging_path + cleanName + "_ProResLT.mov"
+=======
+    safe_file_name = cleanString(file_name)
+    print("clean name " + safe_file_name)
+    finalName = staging_path + safe_file_name + "_ProResLT.mov"
+>>>>>>> f4e4cda79e6c3361dde64f98a4f3bbdb173e770c
     ff_command = "ffmpeg -i '" + full_path + "' -vcodec prores_ks -profile:v 1 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le '" + finalName + "'"
 
     print("### " + ff_command)
