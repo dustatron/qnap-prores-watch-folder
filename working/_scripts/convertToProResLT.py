@@ -18,6 +18,7 @@ finished_path = master_path+'/ProRes/'
 file_path_array = []
 file_name_array = []
 
+#functions
 def cleanString(file_name):
     file_name_no_extention = os.path.splitext(file_name)
     space_to_dash = file_name_no_extention[0].replace(' ', '_').lower()
@@ -58,7 +59,23 @@ for r, d, f in os.walk(watch_path):
             buildList(file)
         elif '.mp4' in file:
             buildList(file)
-
+        elif '.mov' in file:
+            buildList(file)
+        elif '.MXF' in file:
+            buildList(file)
+        elif '.mxf' in file:
+            buildList(file)
+        elif '.webm' in file:
+            buildList(file)
+        elif '.avi' in file:
+            buildList(file)
+        elif '.flv' in file:
+            buildList(file)
+        elif '.wmv' in file:
+            buildList(file)
+        elif '.ogg' in file:
+            buildList(file)
+            
 #Moving files to inProcess
 for f in file_path_array:
     index = file_path_array.index(f)
