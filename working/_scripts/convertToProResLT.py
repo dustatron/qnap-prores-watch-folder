@@ -74,7 +74,7 @@ for r, d, f in os.walk(watch_path):
         elif '.ogg' in file:
             buildList(file)
 
-#Moving files to inProcess
+#Prep files for converting
 for index, movie_file in enumerate(file_name_array):
     source = file_path_array[index]
     to_in_process = in_process_path + movie_file
@@ -83,7 +83,7 @@ for index, movie_file in enumerate(file_name_array):
     print('Moving' + movie_file + 'to inProcess')
 
 
-#start converting process
+#Start converting process
 for movie_file in file_name_array:
     movie_file_path = in_process_path + movie_file
     destination = processed_path + movie_file
@@ -94,4 +94,5 @@ for movie_file in file_name_array:
     #move completed movie to processed folder
     move_to(movie_file_path, destination)
 
+#move prores files
 finalize()
