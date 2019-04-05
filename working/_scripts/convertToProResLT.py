@@ -41,13 +41,10 @@ def converToProRes(movie_file_name, current_path):
     subprocess.call(ff_command, shell=True)
 
 def finalize():
-    source = staging_path
-    destination = finished_path
-
     files = os.listdir(source)
 
-    for f in files:
-        shutil.move(source+f, destination)
+    for file_name in files:
+        shutil.move(staging_path + file_name, finished_path)
 
 
 #Video file type to look for
