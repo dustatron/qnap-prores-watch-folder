@@ -1,13 +1,8 @@
-import os
-import subprocess
-import shutil
-import re
+import os, subprocess, shutil, re
 
+#Finding the file locaiton of the master folder
 current_dir = os.path.realpath(__file__)
-target_dir = os.path.sep.join(current_dir.split(os.path.sep)[:-3])
-
-master_path = target_dir
-# master_path = "/Users/dmccord/Desktop/qnap-prores-watch-folder-master"
+master_path = os.path.sep.join(current_dir.split(os.path.sep)[:-3])
 
 watch_path = master_path+'/download_here/'
 in_process_path = master_path+'/working/inProcess/'
@@ -15,30 +10,25 @@ staging_path = master_path+'/working/temp/'
 processed_path = master_path+'/working/processed/'
 finished_path = master_path+'/ProRes/'
 
+#simple lists for names and paths
 file_path_array = []
 file_name_array = []
 
-#functions
+#Functions
+
+#cleans file name
 def cleanString(file_name):
     file_name_no_extention = os.path.splitext(file_name)
     space_to_dash = file_name_no_extention[0].replace(' ', '_').lower()
     clean_name = re.sub(r'[\W-]+', '', space_to_dash)
     return  clean_name
 
-
 def buildList(l):
     file_path_array.append(os.path.join(r,l))
     file_name_array.append(os.path.join(l))
 
-def moveToInProcess(path, file_name):
-        moveFrom = path
-        moveTo = in_process_path+file_name
-        os.rename(moveFrom, moveTo)
-
-def moveToProcessed(file):
-        moveFrom = in_process_path+file
-        moveTo = processed_path+file
-        os.rename(moveFrom, moveTo)
+def move_to(move_from, move_to):
+    os.rename(move_from, move_to)
 
 def converToProRes(file_name, full_path):
     print("File Name " +file_name)
@@ -51,8 +41,17 @@ def converToProRes(file_name, full_path):
     print("### " + ff_command)
     subprocess.call(ff_command, shell=True)
 
+def finalize():
+    source = staging_path
+    destination = finished_path
 
-#making a list
+    files = os.listdir(source)
+
+    for f in files:
+        shutil.move(source+f, destination)
+
+
+#Video file type to look for
 for r, d, f in os.walk(watch_path):
     for file in f:
         if '.MP4' in file:
@@ -75,35 +74,24 @@ for r, d, f in os.walk(watch_path):
             buildList(file)
         elif '.ogg' in file:
             buildList(file)
-            
-#Moving files to inProcess
-for f in file_path_array:
-    index = file_path_array.index(f)
-    name_of_movie = file_name_array[index]
 
-    print("Moving " + name_of_movie + " to inProcess")
-    moveToInProcess(f, name_of_movie)
+#Moving files to inProcess
+for index, movie_file in enumerate(file_name_array):
+    source = file_name_array[index]
+    to_in_process = in_process_path + movie_file
+    move_to(source, to_in_process)
+    print('Moving {file} to inProcess')
+
 
 #start converting process
-for file_name in file_name_array:
-    fullPath = in_process_path + file_name
+for movie_file in file_name_array:
+    movie_file_path = in_process_path + movie_file
+    to_process_path = processed_path + movie_file
+
     print("#####CALLING FFMPEG FUNCTION######")
-    converToProRes(file_name, fullPath)
-    moveToProcessed(file_name)
+    converToProRes(movie_file, to_process_path)
 
-def finalize():
-    source = staging_path
-    dest1 = finished_path
-
-    files = os.listdir(source)
-
-    for f in files:
-        shutil.move(source+f, dest1)
+    #move completed movie to processed folder
+    move_to(movie_file_path, destination)
 
 finalize()
-
-
-
-# for root, dirs, files in os.walk("."):
-#     for filename in files:
-#         print(filename)
