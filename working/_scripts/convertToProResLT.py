@@ -41,7 +41,7 @@ def converToProRes(movie_file_name, current_path):
     subprocess.call(ff_command, shell=True)
 
 def finalize():
-    files = os.listdir(source)
+    files = os.listdir(staging_path)
 
     for file_name in files:
         shutil.move(staging_path + file_name, finished_path)
