@@ -14,7 +14,7 @@ However, my testing has shown that the files created with ffmpeg do perform well
 
 All of the scripts are under "/working/_scripts/" and are labeled for the flavor of ProRes they will create. They are self-contained and should not need to be edited to function correctly. However, if you wish to change the script to create a different codec it should be simple to modify. The variable 'ffmpeg_recipe' contains the ffmpeg instructions used. By changing this line you will change how the script converts the files.
 
-#Other important notes: 
+# Other important notes: 
 You can change the main directory name but all the other names in this folder structure are used in this script. Changing their names will break the script. 
 
 because Github will not preserve an empty folder I have placed temp '.txt' files in each folder. Once you have downloaded the project and set it up you can delete the '.txt' files. 
