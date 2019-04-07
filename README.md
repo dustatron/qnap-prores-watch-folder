@@ -24,3 +24,19 @@ While I specifically built and tested this on a Qnap device, it should run on an
 # License
 
 PTF for Qnap is distributed under the GPL making it completely open and available for anyone to use.
+
+# Installation 
+
+Rename the folder to something that makes sense to you. 
+
+find your Qnap devices IP address and open up a terminal. 
+
+ssh into your device.
+```python
+ssh admin@(device ip address here)
+```
+navigate to the shared folders.
+```python
+cd /share/CACHEDEV1_DATA/
+```
+
