@@ -58,11 +58,11 @@ or
 ```python
 vi /etc/config/crontab
 ```
-###add this line with the correct directory to the script 
+### add this line with the correct directory to the script 
 This example will run the script every 2 minutes. 
 */2 * * * * python /share/CACHEDEV1_DATA/100_working/__toProRes/working/_scripts/toLT.py
 
-###save the file
+### save the file
 hit escape
 ```python
 esc 
@@ -72,7 +72,7 @@ Then type
 :wq
 ```
 
-###restart crontab
+### restart crontab
 ```python
 crontab /etc/config/crontab && /etc/init.d/crond.sh restart
 ```
