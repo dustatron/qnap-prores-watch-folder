@@ -11,13 +11,14 @@ staging_path = master_path+'/working/temp/'
 processed_path = master_path+'/working/processed/'
 finished_path = master_path+'/ProRes/'
 
+#ffmpeg command
 ffmpeg_recipe =  "' -vcodec prores_ks -profile:v 1 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le '"
 
 #simple lists for names and paths
 file_path_array = []
 file_name_array = []
 
-#Functions
+####### FUNCTIONS ########
 
 #building arrays of files.
 def buildList(l):
@@ -50,6 +51,7 @@ def finalize():
             os.rename(staging_path + file_name, finished_path + file_name)
     print("finished processing videos and successfully moved to Outputs")
 
+####### FOR LOOPS #######
 
 #Video file type to look for
 for r, d, f in os.walk(watch_path):
@@ -78,9 +80,9 @@ for r, d, f in os.walk(watch_path):
 #Prep files for converting
 for index, movie_file in enumerate(file_name_array):
     source = file_path_array[index]
-    to_in_process = in_process_path + movie_file
+    send_to_in_process = in_process_path + movie_file
 
-    move_to(source, to_in_process)
+    move_to(source, send_to_in_process)
     print('Moving' + movie_file + 'to inProcess')
 
 
@@ -95,5 +97,5 @@ for movie_file in file_name_array:
     #move completed movie to processed folder
     move_to(movie_file_path, destination)
 
-#move prores files
+#Move completed files
 finalize()
