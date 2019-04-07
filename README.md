@@ -26,13 +26,13 @@ While I specifically built and tested this on a Qnap device, it should run on an
 PTF for Qnap is distributed under the GPL making it completely open and available for anyone to use.
 
 # Installation
-1.) start by downloading this project with the 'Clone or Download' button in the top right of the Github page. 
+### 1.) start by downloading this project with the 'Clone or Download' button in the top right of the Github page. 
 
 unzip and move the folder to a location you want it to be on your Qnap NAS device. 
 
-2.) Rename the folder to something that makes sense to you. 
+### 2.) Rename the folder to something that makes sense to you. 
 
-3.) SSH into your device.
+### 3.) SSH into your device.
 Find your Qnap devices IP address and open up a terminal. 
 In the terminal type...
 ```python
@@ -49,7 +49,7 @@ When you find it save this location for later use.
 example:
 /share/CACHEDEV1_DATA/Shared-Folder/qnap-prores-watch-folder/working/_scripts/toLT.py
 
-4.) Ad the script to Crontab
+### 4.) Open Crontab in an editor
 type this into the ssh terminal.
 ```python
 crontab -e
@@ -58,21 +58,25 @@ or
 ```python
 vi /etc/config/crontab
 ```
-### add this line with the correct directory to the script 
+### 5.) Add this line to script 
+Note: replace the directory with the correct directory to the the script you found eariler. 
 This example will run the script every 2 minutes. 
+```python
 */2 * * * * python /share/CACHEDEV1_DATA/100_working/__toProRes/working/_scripts/toLT.py
+```
 
-### save the file
-hit escape
+### 6.) Save the file
+hit escape.
 ```python
 esc 
 ```
-Then type
+Then type :wq.
 ```python
 :wq
 ```
 
-### restart crontab
+### 7.) restart crontab
+Type this line into your termianl.
 ```python
 crontab /etc/config/crontab && /etc/init.d/crond.sh restart
 ```
