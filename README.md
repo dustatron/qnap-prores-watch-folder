@@ -19,7 +19,7 @@ You can change the main directory name but all the other names in this folder st
 
 because Github will not preserve an empty folder I have placed temp '.txt' files in each folder. Once you have downloaded the project and set it up you can delete the '.txt' files. 
 
-While I specifically built and tested this on a Qnap device, it should run on any Linux box with python and ffmpeg install. 
+While I specifically built and tested this on a Qnap device, it should run on any Linux box with python and ffmpeg installed. 
 
 # License
 
