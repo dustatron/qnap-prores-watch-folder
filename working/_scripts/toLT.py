@@ -1,4 +1,4 @@
-import os, subprocess, shutil, re
+import os, subprocess, re
 
 #Finding the file locaiton of the master folder
 current_dir = os.path.realpath(__file__)
@@ -10,6 +10,8 @@ in_process_path = master_path+'/working/inProcess/'
 staging_path = master_path+'/working/temp/'
 processed_path = master_path+'/working/processed/'
 finished_path = master_path+'/ProRes/'
+
+ffmpeg_recipe =  "' -vcodec prores_ks -profile:v 1 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le '"
 
 #simple lists for names and paths
 file_path_array = []
@@ -35,7 +37,7 @@ def move_to(move_from, move_to):
 def converToProRes(movie_file_name, current_path):
     clean_name = cleanString(movie_file_name)
     final_name = staging_path + clean_name + "_ProResLT.mov"
-    ff_command = "ffmpeg -i '" + current_path + "' -vcodec prores_ks -profile:v 1 -qscale:v 9 -vendor ap10 -pix_fmt yuv422p10le -acodec pcm_s16le '" + final_name + "'"
+    ff_command = "ffmpeg -i '" + current_path + ffmpeg_recipe + final_name + "'"
 
     print("### " + ff_command)
     subprocess.call(ff_command, shell=True)
@@ -44,7 +46,9 @@ def finalize():
     files = os.listdir(staging_path)
 
     for file_name in files:
-        shutil.move(staging_path + file_name, finished_path)
+        if '.mov' in file_name:
+            os.rename(staging_path + file_name, finished_path + file_name)
+    print("finished processing videos and successfully moved to Outputs")
 
 
 #Video file type to look for
